@@ -1,7 +1,7 @@
-/** VIBE VISUAL FORGE 1.2.0 — deterministic, dependency-free visual engine.
+/** VIBE VISUAL FORGE 1.2.2 — deterministic, dependency-free visual engine.
  * Genuine editable web documents and GLB geometry blockouts, NOT AI photorealism.
  */
-export const VERSION='1.2.0';
+export const VERSION='1.2.2';
 export const THEMES={
   obsidian:{name:'Obsidian / Gold',bg:'#10151e',card:'#1b2230',accent:'#f0b86b',text:'#f4f4f1',soft:'#a9b2bf'},
   glacier:{name:'Glacier / Mint',bg:'#111e28',card:'#20323c',accent:'#67e5c4',text:'#f1fbff',soft:'#a9c2ca'},

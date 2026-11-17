@@ -1,4 +1,4 @@
-# VIBE VISUAL FORGE 1.2.0 — cross-platform studio and remote MCP
+# VIBE VISUAL FORGE 1.2.2 — cross-platform studio and remote MCP
 
 ## Implemented
 
@@ -17,3 +17,11 @@
 - Real device 60 FPS performance, battery use and full WCAG accessibility audit.
 
 **Honest classification:** working cross-platform prototype/toolkit, not the complete originally requested studio-quality visual engine.
+
+## Cloud deployment status
+
+The Vercel project `vibe-visual-forge-cloud` reported a production deployment as READY with its Vercel Authentication protection turned off. The actual public hostname is https://vibe-visual-forge-cloud.vercel.app. The ChatGPT plugin MCP source was updated to the production HTTPS endpoint. Real-world Android/PC use, independent HTTP round-trip and plugin activation remain to be verified from client devices.
+
+## v1.2.2 CI fix
+
+Declared SciPy as a 3D exporter dependency after GitHub-hosted Python tests failed with `ModuleNotFoundError: No module named scipy`. This is a dependency fix, not a photorealism enhancement.

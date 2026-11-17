@@ -1,4 +1,4 @@
-# VIBE VISUAL FORGE 1.2.0
+# VIBE VISUAL FORGE 1.2.2
 
 **Cross-platform PWA + HTTPS MCP design/3D toolkit.** Open the same web studio on Android and Windows, export editable HTML interfaces and genuine GLB geometry files, or use safe stateless tools in any remote MCP-compatible host.
 
@@ -6,7 +6,7 @@
 
 ## 1. Use on phone and PC
 
-Once deployed, open the hosted HTTPS studio from your mobile or desktop browser. Install it from the browser's **Add to Home screen / Install app** if that browser supports PWA installation. The responsive app is the same on both platforms, does not require Python on Android, and works with previously cached assets offline after first load. Exports are downloaded onto the current device.
+Open **https://vibe-visual-forge-cloud.vercel.app** from your mobile or desktop browser. Install it from the browser's **Add to Home screen / Install app** if that browser supports PWA installation. The responsive app is the same on both platforms, does not require Python on Android, and works with previously cached assets offline after first load. Exports are downloaded onto the current device.
 
 UI Studio: editable design system + live interactive HTML preview + standalone HTML export. 3D Workshop: a rotatable genuine 3D blockout viewer for city, winter forest, sports car and airliner, plus GLB 2.0 export. Quality Lab: color contrast check. Projects: **local browser storage only**; there is no cloud sync. No third-party photographs are bundled.
 
@@ -25,7 +25,7 @@ Remote MCP is intentionally stateless and public **without authentication**. Do 
 ### Request example
 
 ```sh
-curl -sS https://YOUR-DEPLOYMENT.example/mcp -X POST \
+curl -sS https://vibe-visual-forge-cloud.vercel.app/mcp -X POST \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json, text/event-stream' \
   --data '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
@@ -44,9 +44,9 @@ Browser tests require Playwright with Chromium; set `VF_RUN_BROWSER_TESTS=1` and
 
 ## 4. Deploy
 
-Connect this GitHub repository to Vercel, configure the project root at the repository root, use the default Node runtime, and deploy. The `/` route serves the PWA, `/api/health` is a non-secret status endpoint, `/mcp` routes to the stateless MCP endpoint. `vercel.json` defines the rewrite. Production HTTPS is necessary for installable PWA support.
+The project was deployed from the source files directly to Vercel (GitHub Login Connection was unavailable). For automatic Git-triggered deployments, explicitly connect the repository in Vercel settings. Otherwise update GitHub and the Vercel deployment separately. The `/` route serves the PWA, `/api/health` is a non-secret status endpoint, `/mcp` routes to the stateless MCP endpoint. `vercel.json` defines the rewrite. Production HTTPS is necessary for installable PWA support.
 
-The `mcp.json` for the ChatGPT plugin is updated to the **verified** deployed endpoint only after it is live. If the host does not enable personal plugins or remote connectors on Android, this package alone cannot change ChatGPT app entitlement. The PWA remains usable in the browser.
+`mcp.json` points to the production alias `https://vibe-visual-forge-cloud.vercel.app/mcp`, which Vercel reports as deployed. End-to-end remote ChatGPT installation is still host-dependent and was not confirmed by direct mobile testing. If the host does not enable personal plugins or remote connectors on Android, this package alone cannot change ChatGPT app entitlement. The PWA remains usable in the browser.
 
 ## 5. Availability limitations
 

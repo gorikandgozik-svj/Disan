@@ -1,7 +1,7 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import {THEMES,VERSION,designSpec,htmlTemplate,createScene,exportGLB,colorContrast} from '../public/js/engine.mjs';
 import handler,{handleRpc} from '../api/mcp.js';
-test('version and palette',()=>{assert.equal(VERSION,'1.2.0');assert.equal(Object.keys(THEMES).length,4);});
+test('version and palette',()=>{assert.equal(VERSION,'1.2.2');assert.equal(Object.keys(THEMES).length,4);});
 test('design spec truthful and serializable',()=>{const r=designSpec({title:'Тест',theme:'glacier'});assert.equal(r.title,'Тест');assert.equal(r.claims.photorealistic,false);assert.ok(JSON.stringify(r).length>500);});
 test('HTML is real interactive, responsive and escapes untrusted title',()=>{const h=htmlTemplate({title:'<img src=x onerror=alert(1)>',theme:'ember'});assert.match(h,/addEventListener\('input'/);assert.match(h,/@media\(max-width:680px\)/);assert.ok(!h.includes('<img src=x onerror=alert(1)>'));assert.ok(h.includes('&lt;img'));});
 test('title length bound',()=>{assert.throws(()=>htmlTemplate({title:'x'.repeat(101)}));});
@@ -11,7 +11,7 @@ for(const type of ['city','winter-forest','sports-car','airliner']){
  test(`seeded deterministic ${type}`,()=>{assert.deepEqual(createScene(type,42),createScene(type,42));});
 }
 test('scene rejects unknown type and bad data',()=>{assert.throws(()=>createScene('unsupported'));assert.throws(()=>exportGLB({meshes:Array(1501).fill({})}));});
-test('MCP initialize, tools/list and actual call',()=>{const h=handleRpc({jsonrpc:'2.0',id:1,method:'initialize'});assert.equal(h.result.serverInfo.version,'1.2.0');const l=handleRpc({jsonrpc:'2.0',id:2,method:'tools/list'});assert.equal(l.result.tools.length,5);const o=handleRpc({jsonrpc:'2.0',id:3,method:'tools/call',params:{name:'forge_design_spec',arguments:{title:'Airplane project'}}});assert.equal(o.result.structuredContent.title,'Airplane project');});
+test('MCP initialize, tools/list and actual call',()=>{const h=handleRpc({jsonrpc:'2.0',id:1,method:'initialize'});assert.equal(h.result.serverInfo.version,'1.2.2');const l=handleRpc({jsonrpc:'2.0',id:2,method:'tools/list'});assert.equal(l.result.tools.length,5);const o=handleRpc({jsonrpc:'2.0',id:3,method:'tools/call',params:{name:'forge_design_spec',arguments:{title:'Airplane project'}}});assert.equal(o.result.structuredContent.title,'Airplane project');});
 test('MCP error contracts',()=>{assert.equal(handleRpc({jsonrpc:'2.0',method:'ping'}),null);assert.equal(handleRpc({jsonrpc:'2.0',id:1,method:'unknown'}).error.code,-32601);assert.equal(handleRpc({jsonrpc:'2.0',id:2,method:'tools/call',params:{name:'forge_3d_scene_plan',arguments:{type:'bad'}}}).result.isError,true);});
 function mockReq(body,options={}){const req={body,method:options.method??'POST',headers:{accept:'application/json, text/event-stream',host:'vf.example.test',...(options.headers??{})}};const res={statusCode:200,headers:{},setHeader(k,v){this.headers[k]=v;},status(code){this.statusCode=code;return this;},json(data){this.body=data;return this;},end(){this.ended=true;return this;}};return {req,res};}
 test('cloud transport requires MCP Accept',async()=>{const {req,res}=mockReq({}, {headers:{accept:'application/json'}});await handler(req,res);assert.equal(res.statusCode,406);});

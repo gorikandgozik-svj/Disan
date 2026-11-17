@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "vibe-visual-forge",
-  "version": "1.2.0",
-  "description": "Cross-platform HTTPS MCP tools, installable responsive PWA UI studio, 3D GLB blockouts, local optional desktop executor.",
+  "version": "1.2.2",
+  "description": "Mobile/desktop PWA and deployed HTTPS Streamable HTTP MCP tools for real HTML, procedural 3D GLB and UI QA.",
   "author": {
     "name": "VIBE VISUAL FORGE"
   },
@@ -24,7 +24,7 @@
       "interface": {
         "displayName": "VIBE VISUAL FORGE",
         "shortDescription": "UI, 3D and visual QA",
-        "longDescription": "Cross-platform PWA for mobile and desktop: working HTML UI exports, low-poly GLB scenes, UI/3D tool calls and bounded quality checks. Cloud MCP requires deployment and connection; background AI jobs and photorealism are not included.",
+        "longDescription": "Mobile and desktop PWA, with a remote HTTPS MCP for design specifications, working standalone HTML templates, low-poly 3D scene plans and contrast checks. Public cloud MCP does not access user files or perform autonomous 24/7 jobs.",
         "developerName": "VIBE VISUAL FORGE",
         "category": "Productivity",
         "capabilities": [

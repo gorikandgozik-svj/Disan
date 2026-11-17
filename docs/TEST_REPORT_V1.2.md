@@ -1,4 +1,4 @@
-# VIBE VISUAL FORGE v1.2.0 verification
+# VIBE VISUAL FORGE v1.2.2 verification
 
 ## Local tests (2026-11-17)
 
@@ -17,3 +17,11 @@
 - Offline service-worker installation and battery consumption on real devices not tested.
 
 These are claims about specific tested code paths, not a claim of an ideal/perfect product.
+
+## Hosting evidence
+
+Vercel production deployment: READY, production alias `vibe-visual-forge-cloud.vercel.app`, no password and no Vercel SSO protection. The deployment was created via inline file upload, not a live GitHub integration. A direct external HTTP GET/POST smoke test of the published domain could not be executed from this environment; the endpoint should be verified from a browser and remote MCP client before claiming complete cross-device availability.
+
+## GitHub Actions initial failure resolved in sources
+
+The first GitHub-hosted Python jobs for v1.2.0 failed because `trimesh` needs `scipy.sparse` to convert face colors to vertex colors while exporting GLB. Version 1.2.2 adds an explicit compatible `scipy` requirement. This fix is only confirmed in GitHub after a subsequent workflow run is green; local reruns alone are insufficient.

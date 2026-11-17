@@ -1,4 +1,4 @@
-# Cross-platform architecture: 1.2.0
+# Cross-platform architecture: 1.2.2
 
 ```text
 Android browser/PWA ─┐
@@ -18,3 +18,5 @@ Implement authenticated user sessions, durable storage, bounded job queues, a de
 ## MCP compatibility
 
 Stateless Streamable HTTP (protocol 2025-11-25); JSON-RPC POST at /mcp; no session IDs, no server-initiated SSE or sampling, no OAuth, no client filesystem access. Requires the client to accept both `application/json` and `text/event-stream`. All tool calls are bounded to deterministic local computations.
+
+**Production alias:** https://vibe-visual-forge-cloud.vercel.app. Production MCP: https://vibe-visual-forge-cloud.vercel.app/mcp. Hosting deployment is separate from GitHub: the account requires a GitHub Login Connection to enable automatic Git deployment.

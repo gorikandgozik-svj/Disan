@@ -1,26 +1,23 @@
-name: Publish v1.1.0 release
+name: Publish v1.2.2 release
 on:
-  push:
-    branches: [main]
-    paths:
-      - .github/workflows/release.yml
-  workflow_dispatch:
-
+  workflow_run:
+    workflows: [Tests]
+    types: [completed]
 permissions:
   contents: write
-
 jobs:
   publish:
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout public source
-        uses: actions/checkout@v4
-      - name: Create release if it does not exist
+      - uses: actions/checkout@v4
+      - name: Create release once CI succeeds
         env:
           GH_TOKEN: ${{ github.token }}
+          TARGET_SHA: ${{ github.event.workflow_run.head_sha }}
         run: |
-          if gh release view v1.1.0 >/dev/null 2>&1; then
-            echo "Release v1.1.0 already exists."
+          if gh release view v1.2.2 >/dev/null 2>&1; then
+            echo 'v1.2.2 already released'
             exit 0
           fi
-          gh release create v1.1.0 --target "${GITHUB_SHA}" --title "VIBE VISUAL FORGE 1.1.0" --notes-file RELEASE_NOTES.md
+          gh release create v1.2.2 --target "$TARGET_SHA" --title 'VIBE VISUAL FORGE 1.2.2 — Cross-platform' --notes-file RELEASE_NOTES.md

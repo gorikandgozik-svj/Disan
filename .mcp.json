@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "visual-forge-cloud": {
+      "type": "streamable-http",
+      "url": "https://vibe-visual-forge-cloud.vercel.app/mcp",
+      "headers": {}
+    }
+  }
+}
