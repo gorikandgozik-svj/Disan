@@ -32,3 +32,12 @@ jobs:
             -d '{"jsonrpc":"2.0","id":42,"method":"tools/list"}' \
             "https://vibe-visual-forge-cloud.vercel.app/mcp" -o /tmp/mcp.json
           python -c "import json; x=json.load(open('/tmp/mcp.json')); names=[t['name'] for t in x['result']['tools']]; assert x['id']==42 and 'forge_ui_html' in names and 'forge_3d_scene_plan' in names; print(names)"
+      - name: Execute remote MCP contrast tool
+        run: |
+          set -euo pipefail
+          curl -fL -sS --retry 3 --retry-delay 3 --max-time 30 \
+            -X POST -H "Content-Type: application/json" \
+            -H "Accept: application/json, text/event-stream" \
+            -d '{"jsonrpc":"2.0","id":43,"method":"tools/call","params":{"name":"forge_contrast","arguments":{"foreground":"#FFFFFF","background":"#000000"}}}' \
+            "https://vibe-visual-forge-cloud.vercel.app/mcp" -o /tmp/contrast.json
+          python -c "import json; x=json.load(open('/tmp/contrast.json')); y=x['result']['structuredContent']; assert x['id']==43 and y['contrastRatio']>20.9 and y['wcagAA_normalText'] is True; print(y)"
