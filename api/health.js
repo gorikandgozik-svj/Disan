@@ -1,0 +1,1 @@
+export default function handler(req,res){res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');if(req.method!=='GET'){res.status(405).json({ok:false,error:'GET required'});return;}res.status(200).json({ok:true,service:'vibe-visual-forge-cloud',version:'1.2.0',capabilities:'stateless-mcp-and-pwa',autonomous_background_execution:false});}

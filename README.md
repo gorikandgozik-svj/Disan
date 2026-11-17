@@ -1,92 +1,57 @@
-# VIBE VISUAL FORGE
+# VIBE VISUAL FORGE 1.2.0
 
-**Reference-driven UI / 3D production tools for ChatGPT and supported local MCP hosts.**
+**Cross-platform PWA + HTTPS MCP design/3D toolkit.** Open the same web studio on Android and Windows, export editable HTML interfaces and genuine GLB geometry files, or use safe stateless tools in any remote MCP-compatible host.
 
-[![Tests](https://img.shields.io/badge/local%20tests-25%20passed-35b779)](#verification) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+> **Actual quality:** UI prototypes and low-poly procedural **blockouts**. This is neither a photoreal AI image/3D model nor an AAA game engine. Background autonomous work, cross-device cloud sync, native APK/EXE, and guaranteed 24/7 uptime have **not** been implemented.
 
-> **Status: development toolkit, not an AAA art generator.** It builds real responsive web prototypes and GLB **blockouts**, produces limited structural audits, and helps organize visual-engineering work. It does **not** include a proprietary photorealistic 3D model, render farm, Blender, GPU engine, cloud inference, Android APK compiler, or always-on ChatGPT executor. No claim of visual parity with cinematic automotive and aircraft photographs is made.
+## 1. Use on phone and PC
 
-## Capabilities
+Once deployed, open the hosted HTTPS studio from your mobile or desktop browser. Install it from the browser's **Add to Home screen / Install app** if that browser supports PWA installation. The responsive app is the same on both platforms, does not require Python on Android, and works with previously cached assets offline after first load. Exports are downloaded onto the current device.
 
-| Category | What actually runs | Not yet provided |
-| --- | --- | --- |
-| UI | Five style token sets, browser-based functional UI demo, buttons, controls, charts | arbitrary prompt-to-app, production-ready application backend |
-| Responsive QA | Chromium/Playwright screenshot checks at 320 / 390 / 768 / 832-landscape / 1440px, slider/mood/navigation/reset checks | independent accessibility audit, detailed manual visual review |
-| References | Pillow palette and dimensions; equal-size screenshot pixel diff | full multimodal understanding or photo-to-geometry generation |
-| 3D city | procedural GLB city blockout with actual geometry | detailed photogrammetric buildings, materials library, game-world streaming |
-| 3D vehicles | GLB car and four-engine airliner **silhouette blockouts**, named parts | true-to-model blueprints, rigged animations, real CAD, manufacturer geometry |
-| 3D nature | procedural snow-and-conifers GLB environment blockout | photoreal vegetation, wind simulation, GPU lighting/weather system |
-| 3D QA | GLB geometry/bounds/degeneracy and triangle counts | visual quality, collisions, GPU FPS, device profiling |
-| Rendering | Blender 4.x Cycles studio *script* for externally supplied GLB | Blender bundling or verified rendered final asset |
-| Automation | allow-listed local queue with bounded tasks and failure logs | work while host is closed, self-activation in every ChatGPT message |
+UI Studio: editable design system + live interactive HTML preview + standalone HTML export. 3D Workshop: a rotatable genuine 3D blockout viewer for city, winter forest, sports car and airliner, plus GLB 2.0 export. Quality Lab: color contrast check. Projects: **local browser storage only**; there is no cloud sync. No third-party photographs are bundled.
 
-## Quick start
+## 2. Remote MCP (ChatGPT or another compatible client)
 
-Install **Python 3.11+**, then in the project directory:
+Host `/mcp` using Vercel or a Node.js-compatible HTTPS environment. Connect the deployed endpoint as a *remote* Streamable HTTP MCP server where the host allows that capability. It supports stateless `POST` JSON-RPC with `Accept: application/json, text/event-stream`. Calls cannot access a user's filesystem, private account, arbitrary URLs, or shell. Tool list:
 
-```bash
+- `forge_capabilities` — honest features and unsupported claims.
+- `forge_design_spec` — palette/layout/typography with testable design contract.
+- `forge_ui_html` — standalone interactive HTML from a project name/theme.
+- `forge_3d_scene_plan` — deterministic scene-geometry parameters.
+- `forge_contrast` — WCAG contrast ratio.
+
+Remote MCP is intentionally stateless and public **without authentication**. Do not send secrets or personal data in tool arguments. No external AI provider, GPU backend, image-to-3D model or durable task queue is included.
+
+### Request example
+
+```sh
+curl -sS https://YOUR-DEPLOYMENT.example/mcp -X POST \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json, text/event-stream' \
+  --data '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+```
+
+## 3. Source development and tests
+
+```sh
+npm test                # Node: GLB, HTML, security, HTTP/MCP protocol
+npm run check           # JS syntax
 python -m pip install -r requirements.txt
 python -m unittest discover -s tests -v
-python server/mcp_server.py
 ```
 
-The third command starts an MCP stdio server; a compatible desktop host can configure it with the `mcp.json` command. The server expects newline-delimited JSON-RPC over stdin. **Do not paste JSON messages into an active ordinary terminal without the server process.**
+Browser tests require Playwright with Chromium; set `VF_RUN_BROWSER_TESTS=1` and see `docs/TEST_REPORT.md`. The optional Python **desktop** MCP still exists at `server/mcp_server.py`; its portable configuration is `mcp.local.json`, installed separately from the cloud service.
 
-Example request (when connected to the MCP host):
+## 4. Deploy
 
-```json
-{"name":"create_ui_prototype","arguments":{"project_name":"My Design","style":"dark-luxury"}}
-```
+Connect this GitHub repository to Vercel, configure the project root at the repository root, use the default Node runtime, and deploy. The `/` route serves the PWA, `/api/health` is a non-secret status endpoint, `/mcp` routes to the stateless MCP endpoint. `vercel.json` defines the rewrite. Production HTTPS is necessary for installable PWA support.
 
-Tools: `toolchain_probe`, `analyze_reference`, `generate_design_spec`, `create_ui_prototype`, `audit_ui`, `create_city_blockout`, `create_vehicle_blockout`, `create_winter_environment`, `audit_3d`, `compare_screenshots`, `create_blender_recipe`.
+The `mcp.json` for the ChatGPT plugin is updated to the **verified** deployed endpoint only after it is live. If the host does not enable personal plugins or remote connectors on Android, this package alone cannot change ChatGPT app entitlement. The PWA remains usable in the browser.
 
-### Browser QA (optional)
+## 5. Availability limitations
 
-```bash
-python -m pip install playwright
-python -m playwright install chromium
-VF_RUN_BROWSER_TESTS=1 python -m unittest discover -s tests -v   # Linux / macOS
-```
+Vercel's serverless functions respond when invoked; they do not run an autonomous daemon continuously. Free hosting has usage limits, possible outages and rate limits. A true durable background processing service requires a job queue, database, worker and operational monitoring. Offline PWA assets allow local editing but do not process remote AI tasks while devices are asleep.
 
-Windows PowerShell:
+## 6. Ethical licensing and security
 
-```powershell
-$env:VF_RUN_BROWSER_TESTS = '1'
-python -m unittest discover -s tests -v
-```
-
-### Local queue (optional; NOT self-installing)
-
-```bash
-python server/watch.py --once  # execute pending jobs once
-python server/watch.py         # poll until stopped; only if you explicitly start it
-```
-
-Create `~/VisualForgeProjects/queue/inbox/job1.json` (or set `VF_WORKSPACE_DIR`) with:
-
-```json
-{"tool":"create_ui_prototype","arguments":{"project_name":"My Demo","style":"cinematic"}}
-```
-
-Reports appear under `queue/done` or `queue/failed`. The watcher never runs arbitrary shell snippets, does not retry failed jobs, has a 64-KiB task limit, and checks abandoned jobs. It is **not** a continuously running autonomous AI and does not connect to ChatGPT via itself. Set a process manager up explicitly if required.
-
-## Plugin packaging and limitations
-
-- `plugin.json`: portable Agent Plugins 1.0 manifest, plugin name `vibe-visual-forge`, version 1.1.0.
-- `skills/*/SKILL.md`: five optional auto-eligible skills. Their invocation is controlled by ChatGPT's host; installing a private plugin does not prove invocation in each chat.
-- `mcp.json`: local stdio MCP process. It cannot automatically connect to mobile ChatGPT or a cloud account without a separate supported runtime.
-- `server/`: lightweight Python implementation and procedural assets. Core MCP server uses stdlib; the generation/test tools require the dependencies in `requirements.txt`.
-
-**Hardware:** interactive graphics performance must be measured on the target phone or PC. Offline screenshot speed or triangle count never proves 60 FPS.
-
-## Verification
-
-See [`docs/TEST_REPORT.md`](docs/TEST_REPORT.md) for reproducible evidence, tested Python/browser environment and remaining gaps. Do not confuse test-suite pass rate with production quality or visual fidelity.
-
-## Open source, privacy and references
-
-The MIT license covers the code and bundled original icon only. **The 23 user-supplied photographic/UI references are excluded** because redistribution rights have not been verified. If you have lawful visual references, provide them privately to your own workflow. Do not place private photographs, API keys, accounts or other third-party proprietary assets in a public repository.
-
-## Contributing
-
-Contributions welcome: improve real geometry, tested shaders/materials, Blender integration, screenshot comparison, accessibility, Android builds and measurable performance. Include deterministic tests and explicit truth labels. See [`SECURITY.md`](SECURITY.md) before reporting vulnerabilities.
+MIT license covers the code and original icon. User-submitted photographic references are not included in the public distribution. Never embed third-party API keys into the public PWA or repository. See `SECURITY.md`.

@@ -17,7 +17,7 @@ Implicit activation: on relevant creative/product/build tasks without requiring 
 
 ## Tool use
 
-If local MCP tools are available: `toolchain_probe`, `create_ui_prototype`, `audit_ui`, `analyze_reference`, `create_city_blockout`, `create_vehicle_blockout`, `create_winter_environment`, `audit_3d`, `compare_screenshots`, `create_blender_recipe`. If a tool is unavailable, state that and proceed with actually available build tools. Do not claim that tools exist merely because this SKILL lists them.
+For mobile and desktop, prefer the verified remote `forge_design_spec`, `forge_ui_html`, `forge_3d_scene_plan`, `forge_contrast` and `forge_capabilities` when the cloud service is connected. For optional desktop local MCP tools: `toolchain_probe`, `create_ui_prototype`, `audit_ui`, `analyze_reference`, `create_city_blockout`, `create_vehicle_blockout`, `create_winter_environment`, `audit_3d`, `compare_screenshots`, `create_blender_recipe`. If a tool is unavailable, state that and proceed with actually available build tools. Do not claim that tools exist merely because this SKILL lists them.
 
 ## Reality check
 

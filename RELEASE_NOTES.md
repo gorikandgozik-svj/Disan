@@ -1,22 +1,19 @@
-# VIBE VISUAL FORGE v1.1.0 — developer release
+# VIBE VISUAL FORGE 1.2.0 — cross-platform studio and remote MCP
 
-This is an **early engineering toolkit release**; a GitHub Release must only be tagged if this source is published and visible.
+## Implemented
 
-## Added
-- Procedural GLB sportscar and generic four-engine airliner **silhouette blockouts** with named parts.
-- Procedural winter forest GLB **blockout**, including terrain, snow tracks, pine trees and snow caps.
-- Local `audit_3d` structural checks (meshes, bounds, degenerate triangles, vertex validity).
-- Equal-dimension screenshot pixel differences with a saved diff image.
-- Safety-focused slugging for non-ASCII project names; bounded image input.
-- Hardened MCP JSON-RPC error responses and queue limits, atomic reports, interruption handling.
-- Mobile UI reset button bug fix and working mood-color rotation.
-- Expanded test suite and a repeatable browser smoke test.
-- CI configuration and open-source documentation; unlicensed reference photography removed.
+- New installable responsive PWA that runs in mobile/desktop browsers, with offline caching of static assets after initial load.
+- Actual interactive browser UI creator with four design themes and standalone HTML export.
+- Canvas 3D blockout preview and real GLB 2.0 export for four deterministic scene presets.
+- Quality Lab WCAG color contrast checker; browser-local saved project settings.
+- New bounded, stateless HTTPS Streamable HTTP MCP endpoint with five read-only/safe generation tools.
+- Added Node tests for protocol, security/validation, template safety and geometry; added responsive browser tests; retained Python desktop tools and test suite.
 
-## Not yet done
-- No photoreal image-to-3D neural model, no game-ready vehicles or accurate aircraft CAD.
-- No texture authoring or rigged mechanical simulation, GPU shaders, collision/nav meshes, or device FPS measurements.
-- No direct Android APK/Windows EXE, 24/7 ChatGPT process, cloud renderer or hosted web app.
-- The demo still uses illustrative sample data and procedural SVG mountain art.
+## Unimplemented or unverified
 
-**Releasing this version does not certify the user-requested AAA visuals or 'perfect' quality.**
+- Photorealistic 3D, licensed professional asset generation, complex rigs, physically accurate vehicles, advanced shaders, native Android APK and Windows EXE.
+- Cloud project sync, autonomous never-ending background jobs, guaranteed 24/7 uptime.
+- Automatic invocation of private ChatGPT plugin on all mobile/desktop clients (controlled by host availability/installation).
+- Real device 60 FPS performance, battery use and full WCAG accessibility audit.
+
+**Honest classification:** working cross-platform prototype/toolkit, not the complete originally requested studio-quality visual engine.

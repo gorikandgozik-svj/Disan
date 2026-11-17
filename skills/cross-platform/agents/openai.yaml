@@ -1,0 +1,5 @@
+interface:
+  display_name: VIBE Cross-platform Studio
+  short_description: Mobile/desktop visual toolkit
+policy:
+  allow_implicit_invocation: true

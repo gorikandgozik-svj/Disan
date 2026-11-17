@@ -1,10 +1,9 @@
 # Security policy
 
-This is an experimental local toolchain. Do not expose the stdio server or local queue to untrusted users, put it behind a public unauthenticated tunnel, or run it with administrator privileges.
+Report issues privately to the project owner, not in a public issue containing secrets.
 
-- All input files are processed with the invoking user's operating-system permissions.
-- Browser HTML audit uses an isolated headless context and blocks external fetches; **do not** execute actively malicious HTML under privileged accounts.
-- Third-party inputs are untrusted; no arbitrary shell command tool is intentionally provided.
-- The tool currently has no authentication, remote API, sandboxing guarantee, file upload service, or multi-user isolation. It is suitable for trusted local development only.
-- The queue's inbox is not a security boundary; protect workspace file permissions.
-- Use private channels to report security concerns to the maintainer. Do not publish API secrets or sensitive example files.
+The remote MCP endpoint is **public and anonymous** and intentionally accepts only bounded, stateless requests. It has no disk write, shell execution, URL fetching, credentials, external billing or database integrations. The API checks Origin (when supplied), JSON-RPC shape, payload size, enumerated generation types, and title length. Hosting-level abuse protection and rate limiting are still needed for production.
+
+The PWA's project settings are stored locally in the browser and are not sent to the cloud MCP by default. Browser storage can be cleared; projects may be lost. Generated HTML is escaped before interpolation. The preview iframe is sandboxed without access to same-origin data. Service workers cache only same-origin static GET responses, never API or MCP requests.
+
+Do not ship API keys or private visual references inside publicly accessible files. Any expanded server functionality dealing with user files should require authenticated sessions, quotas and explicit permissions.
