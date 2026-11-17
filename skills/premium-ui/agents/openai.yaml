@@ -1,0 +1,5 @@
+interface:
+  display_name: VIBE Premium UI
+  short_description: Real functional premium UI
+policy:
+  allow_implicit_invocation: true

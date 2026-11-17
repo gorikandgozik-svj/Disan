@@ -1,0 +1,6 @@
+interface:
+  display_name: VIBE Visual Director
+  short_description: Reference-first visual direction
+  default_prompt: Design and build actual visual project with evidence of functional output and visual QA.
+policy:
+  allow_implicit_invocation: true

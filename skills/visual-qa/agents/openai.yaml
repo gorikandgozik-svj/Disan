@@ -1,0 +1,5 @@
+interface:
+  display_name: VIBE Visual QA
+  short_description: Visual acceptance testing
+policy:
+  allow_implicit_invocation: true

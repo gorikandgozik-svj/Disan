@@ -1,0 +1,43 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "vibe-visual-forge",
+  "version": "1.1.0",
+  "description": "Reference-driven UI prototypes, procedural GLB blockouts and structural/visual QA tools, with optional local MCP execution.",
+  "author": {
+    "name": "VIBE VISUAL FORGE"
+  },
+  "keywords": [
+    "ui",
+    "ux",
+    "3d",
+    "graphics",
+    "blender",
+    "game",
+    "visual quality",
+    "design",
+    "reference",
+    "android",
+    "windows"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "VIBE VISUAL FORGE",
+        "shortDescription": "UI, 3D and visual QA",
+        "longDescription": "Design reference-driven responsive UI and create real procedural 3D blockouts with local MCP tools, screenshot checks and mesh audits. It does not bundle photoreal neural 3D generation, a GPU renderer or always-on cloud execution.",
+        "developerName": "VIBE VISUAL FORGE",
+        "category": "Productivity",
+        "capabilities": [
+          "Interactive"
+        ],
+        "logo": "./assets/logo.svg",
+        "composerIcon": "./assets/logo.svg",
+        "defaultPrompt": [
+          "Create a production UI from my screenshots, render it and compare visual fidelity.",
+          "Create a game-ready 3D environment with materials, LOD and scene QA.",
+          "Inspect my project, find visual defects and fix them rather than showing a mockup."
+        ]
+      }
+    }
+  }
+}

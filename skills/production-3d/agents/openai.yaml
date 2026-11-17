@@ -1,0 +1,5 @@
+interface:
+  display_name: VIBE Production 3D
+  short_description: Real model and game scenes
+policy:
+  allow_implicit_invocation: true

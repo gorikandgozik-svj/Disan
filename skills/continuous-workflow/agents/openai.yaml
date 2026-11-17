@@ -1,0 +1,5 @@
+interface:
+  display_name: VIBE Continuous Workflow
+  short_description: Continuous visual build loop
+policy:
+  allow_implicit_invocation: true

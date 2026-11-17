@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+.env
+.env.*
+*.log
+*.tmp
+*.working
+VisualForgeProjects/
+queue/
+node_modules/
+.DS_Store
