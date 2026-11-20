@@ -81,7 +81,7 @@ jobs:
             echo '--- StepUp 3-second process state ---'
             adb shell ps -A | grep -Ei 'stepup|webview' || true
             adb shell dumpsys activity activities | grep -Ei 'stepup|resumed|mCurrentFocus' | tail -n 20 || true
-            sleep 5
+            sleep 21
             echo '--- Full system issues ---'
             adb logcat -d -v time | grep -Ei -C 3 'stepup|chromium|webview|lowmemory|am_kill|am_proc_died|force finishing|killing|crash|signal 11|fatal' | tail -n 260 || true
             echo '--- 8-second processes and focus ---'
@@ -99,7 +99,9 @@ jobs:
             echo "Process PID: $PID"
             adb shell screencap -p /sdcard/stepup.png
             adb pull /sdcard/stepup.png emulator-stepup.png
-            test -n "$PID"
+            echo '--- Assert actual process and DOM completion ---'
+            adb shell ps -A | grep -q 'com.stepup.tracker'
+            adb logcat -d -s StepUp:I | grep -q 'onPageFinished file:///android_asset/index.html'
       - name: Save emulator screenshot
         if: always()
         uses: actions/upload-artifact@v4
