@@ -1,0 +1,33 @@
+name: StepUp Android build
+on:
+  push:
+    branches: [stepup-android-build]
+  workflow_dispatch:
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Expand staged Android sources
+        run: base64 --decode stepup-src.b64 | xz --decompress | tar -xf -
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+      - name: Ensure SDK 35
+        run: sdkmanager --install "platforms;android-35" "build-tools;35.0.0"
+      - name: Assemble debug APK
+        run: gradle --no-daemon :app:assembleDebug --stacktrace
+      - name: Upload installable APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: StepUp-Android-Debug-APK
+          path: app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
