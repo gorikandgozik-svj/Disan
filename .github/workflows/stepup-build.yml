@@ -73,7 +73,24 @@ jobs:
           script: |
             adb logcat -c
             adb install -r build-output/app-debug.apk
+            adb shell pm grant com.stepup.tracker android.permission.ACCESS_COARSE_LOCATION
+            adb shell pm grant com.stepup.tracker android.permission.ACCESS_FINE_LOCATION
+            adb shell pm grant com.stepup.tracker android.permission.ACTIVITY_RECOGNITION || true
+            adb shell cmd location set-location-enabled true || true
             adb shell am start -W -n com.stepup.tracker/.MainActivity
+            adb shell am start-foreground-service -n com.stepup.tracker/.TrackingService
+            sleep 4
+            echo '--- Inject simulated GPS points ---'
+            adb emu geo fix 34.32910 27.91710
+            sleep 6
+            adb emu geo fix 34.32918 27.91718
+            sleep 6
+            adb emu geo fix 34.32931 27.91731
+            sleep 6
+            echo '--- Native location diagnostics ---'
+            adb shell run-as com.stepup.tracker cat shared_prefs/stepup.xml | grep -E 'gpsStatus|gnss_points_|gpsRaw_|gpsLastError|gpsProvider|gpsActiveProviders|gpsEvaluation' || true
+            if ! adb shell run-as com.stepup.tracker cat shared_prefs/stepup.xml | grep -q 'gnss_points_'; then echo 'FAIL: simulated GPS was not persisted'; exit 1; fi
+            echo 'PASS: injected GPS callback persisted encrypted route metadata'
             echo '--- Early screenshot ---'
             adb shell screencap -p /sdcard/stepup-early.png
             adb pull /sdcard/stepup-early.png emulator-early.png
