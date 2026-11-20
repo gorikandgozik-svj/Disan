@@ -78,7 +78,7 @@ jobs:
             adb shell pm grant com.stepup.tracker android.permission.ACTIVITY_RECOGNITION || true
             adb shell cmd location set-location-enabled true || true
             adb shell am start -W -n com.stepup.tracker/.MainActivity
-            adb shell run-as com.stepup.tracker /system/bin/am start-foreground-service -n com.stepup.tracker/.TrackingService
+            adb shell run-as com.stepup.tracker /system/bin/am start-foreground-service --user 0 -n com.stepup.tracker/.TrackingService
             sleep 4
             echo '--- Inject simulated GPS points ---'
             adb emu geo fix 34.32910 27.91710
