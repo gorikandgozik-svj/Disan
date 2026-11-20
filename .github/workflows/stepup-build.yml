@@ -74,6 +74,9 @@ jobs:
             adb logcat -c
             adb install -r build-output/app-debug.apk
             adb shell am start -W -n com.stepup.tracker/.MainActivity
+            echo '--- Early screenshot ---'
+            adb shell screencap -p /sdcard/stepup-early.png
+            adb pull /sdcard/stepup-early.png emulator-early.png
             sleep 3
             echo '--- StepUp 3-second process state ---'
             adb shell ps -A | grep -Ei 'stepup|webview' || true
@@ -81,6 +84,13 @@ jobs:
             sleep 5
             echo '--- Full system issues ---'
             adb logcat -d -v time | grep -Ei -C 3 'stepup|chromium|webview|lowmemory|am_kill|am_proc_died|force finishing|killing|crash|signal 11|fatal' | tail -n 260 || true
+            echo '--- 8-second processes and focus ---'
+            adb shell ps -A | grep -Ei 'stepup|webview' || true
+            adb shell dumpsys activity activities | grep -Ei 'stepup|mCurrentFocus|mFocusedApp' | tail -n 20 || true
+            echo '--- Event buffer process exits ---'
+            adb logcat -d -b events | grep -Ei 'stepup|am_proc_died|am_kill|am_finish_activity|am_destroy_activity|am_crash' | tail -n 120 || true
+            echo '--- StepUp process history and errors ---'
+            adb logcat -d -v time | grep -Ei 'stepup|SIGSEGV|SIGABRT|FATAL EXCEPTION|tombstone|process.*died|force finishing|am_kill' | tail -n 100 || true
             echo '--- Android crash buffer ---'
             adb logcat -d -b crash | tail -n 150
             echo '--- AndroidRuntime errors ---'
@@ -95,5 +105,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: StepUp-emulator-screenshot
-          path: emulator-stepup.png
+          path: |
+            emulator-stepup.png
+            emulator-early.png
           if-no-files-found: ignore
