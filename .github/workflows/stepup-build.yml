@@ -72,7 +72,13 @@ jobs:
             adb logcat -c
             adb install -r build-output/app-debug.apk
             adb shell am start -W -n com.stepup.tracker/.MainActivity
-            sleep 8
+            sleep 3
+            echo '--- StepUp 3-second process state ---'
+            adb shell ps -A | grep -Ei 'stepup|webview' || true
+            adb shell dumpsys activity activities | grep -Ei 'stepup|resumed|mCurrentFocus' | tail -n 20 || true
+            sleep 5
+            echo '--- Full system issues ---'
+            adb logcat -d -v time | grep -Ei -C 3 'stepup|chromium|webview|lowmemory|am_kill|am_proc_died|force finishing|killing|crash|signal 11|fatal' | tail -n 260 || true
             echo '--- Android crash buffer ---'
             adb logcat -d -b crash | tail -n 150
             echo '--- AndroidRuntime errors ---'
