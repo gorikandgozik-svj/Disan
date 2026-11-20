@@ -69,14 +69,19 @@ jobs:
           profile: pixel_4
           disable-animations: true
           script: |
+            adb logcat -c
             adb install -r build-output/app-debug.apk
             adb shell am start -W -n com.stepup.tracker/.MainActivity
             sleep 8
+            echo '--- Android crash buffer ---'
+            adb logcat -d -b crash | tail -n 150
+            echo '--- AndroidRuntime errors ---'
+            adb logcat -d -s AndroidRuntime:E | tail -n 120
             PID=$(adb shell pidof com.stepup.tracker | tr -d '\r')
-            test -n "$PID"
-            echo "StepUp process alive: $PID"
+            echo "Process PID: $PID"
             adb shell screencap -p /sdcard/stepup.png
             adb pull /sdcard/stepup.png emulator-stepup.png
+            test -n "$PID"
       - name: Save emulator screenshot
         if: always()
         uses: actions/upload-artifact@v4
